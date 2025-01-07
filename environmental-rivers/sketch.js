@@ -12,6 +12,7 @@ let floodWarning;
 const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
+const cellSize = 3;
 
 function preload() {
   // API definition - https://environment.data.gov.uk/flood-monitoring/doc/reference
@@ -22,14 +23,25 @@ function preload() {
   // myData will represent an array of river objects containing data for each river
 }
 function setup() {
-  createCanvas(innerWidth, innerHeight);
-  noLoop();
+
+  //canvas position - Olie
+  let canvas = createCanvas(innerWidth, 0.75 * innerHeight);
+  canvas.id("canvas");let newCanvasX = (windowWidth)-width;
+  let newCanvasY = (windowHeight)/8;
+  canvas.position(newCanvasX,newCanvasY);
+
+  //
+  // noLoop();
   selectNewRiver();
   setupController();
+
+  frameRate(0.5)
+
+  noiseSeed(1);
 } 
 function selectNewRiver(){
   // reset background (deletes all previous drawing)
-  background(0)
+  // background(0)
   fill(255)
   textSize(36);
   textAlign(CENTER, CENTER);
@@ -52,13 +64,52 @@ function selectNewRiver(){
   // draw the info text
   drawOverlay();
   // move to the next river after a given number of milliseconds
-  setTimeout(selectNewRiver,5000);
+  // setTimeout(selectNewRiver,5000);
 }
+
+function drawBackground() {
+  noStroke();
+  background(220);
+  for (y = 0; y < height; y+= cellSize){
+    for (x = 0; x < width; x+= cellSize){
+      let n = noise(x * 0.005,y * 0.005);
+      console.log(n);
+      
+      if (n < 0.25){
+        fill(216, 150, 91);
+      }
+      else if (n < 0.5){
+        fill(200, 125, 80)
+      }
+      else if (n < 0.75){
+        fill(185, 115, 70)
+      }
+      else{
+        fill(189, 105, 64)
+      }
+      rect(x, y, cellSize);
+    }
+  }
+  filter(BLUR, 10);
+}
+
+function draw() {
+
+  drawBackground();
+
+  selectNewRiver();
+}
+
 function drawRiver(){
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
-  if()
-  stroke(255, random(100), random(100))
+  if(floodWarning == "Flood warning"){
+    stroke(255, random(100), random(100))
+  } else if(floodWarning == "Flood alert"){
+    stroke(255, random(100), random(100))
+
+
+  }
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2){
     strokeWeight(30)
