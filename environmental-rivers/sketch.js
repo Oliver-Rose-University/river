@@ -15,6 +15,7 @@ let beginPoint;
 let endPoint;
 let riverWidth;
 let floodWarning;
+let isTidal;
 const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
@@ -37,14 +38,13 @@ function setup() {
   canvas.id("canvas");let newCanvasX = (windowWidth)-width;
   let newCanvasY = (windowHeight)/8;
   canvas.position(newCanvasX,newCanvasY);
-  
-  //
+
   // noLoop();
   selectNewRiver();
   setupController();
-  
-  // frameRate(0.5)
-  
+
+  frameRate(1)
+
   noiseSeed(1);
 
 
@@ -57,10 +57,10 @@ function selectNewRiver(){
   // reset background (deletes all previous drawing)
   // background(0)
   fill(255)
-  textSize(36);
-  textAlign(CENTER, CENTER);
-  text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
-  textAlign(LEFT, TOP);
+  // textSize(26);
+  // textAlign(CENTER, CENTER);
+  // text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
+  // textAlign(LEFT, TOP);
   // choose a new river index at random
   index = floor(random(myData.items.length - 1))
   // assign the current river data object for ease of reference
@@ -120,30 +120,33 @@ function draw() {
 function drawRiver(){
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
-  if(floodWarning == "Flood warning"){
-    r = 150;
-    g = random(40);
-    b = random(40);
+  let r;
+  let g;
+  let b;
 
-  } else if(floodWarning == "Flood alert"){
-    r = 200;
-    g = random(80);
-    b = random(80);
+  if(floodWarning == "Flood alert"){
+    r = 200
+    g = random(80)
+    b = random(80)
+  } else if(floodWarning == "Flood warning"){
+    r = 150 
+    g = random(40)
+    b= random(40)
   } else {
-    r = 255;
-    g = random(100);
-    b = random(100);
+    r = 255
+    g = random(100)
+    b = random(100)
   }
-  stroke(r,g,b);
-  
+  stroke(r,g,b)
+
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2){
-    strokeWeight(30)
+    strokeWeight(25)
   } else if (riverWidth == 3){
-    strokeWeight(20)
-  } else if (riverWidth == 4)[
-    strokeWeight(10)
-  ]
+    strokeWeight(15)
+  } else {
+    strokeWeight(5)
+  }
   
   // drawing routine
   beginShape()
@@ -197,11 +200,14 @@ function drawRiver(){
           line(x2, y2,(x2+branchLength2),(y2-50))
         }
 
+        // circles appear on river (clots) if river is tital (even if only one of them is)
+        if(isTidal == true && (i == point1 || i == point3 )){
+          fill(r,g,b)
+          circle(x,y,30)
+          noFill()
+        }
       }    
     }
-
-    // uncomment circle to see exactly where each vertex is placed
-    // circle(x, y, 100)
   }
   vertex(endPoint.x, endPoint.y)
 
@@ -211,20 +217,25 @@ function newRiver(river) {
   // evaluate riverWidth based on severity of flooding, transforming it into a number between 1 (least severe) and 4 (most severe)
   riverWidth = 5 - river.severityLevel // original data given: 1 = worst, 4 = best
   floodWarning = river.severity
+  isTidal = river.isTidal
   // calculate beginning and end points fixed to left and right edges of the canvas
-  beginPoint = { x: 10, y: random(height * 0.25, height * 0.75) }
-  endPoint = { x: width-10, y: random(height * 0.25, height * 0.75) }
+  beginPoint = { x: 0, y: random(height * 0.25, height * 0.75) }
+  endPoint = { x: width, y: random(height * 0.25, height * 0.75) }
 }
 function drawOverlay(){
   fill(255)
   noStroke()
-  textSize(24);
+  textSize(20);
   // draw river name
+
   text(river.description, 50, 50);
   textSize(18);
-  // draw flood message or if empty use blank message rather than show an empty string
-  let message = river.message.trim() || BLANKMESSAGE; // trim() removes leading white space
-  // text(message, 50, 100, width/2);
+
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
+  textAlign(LEFT, TOP);
+
 }
 
 
@@ -265,7 +276,13 @@ function allCC(e) {
         }
       break;
     }
-    case 37: {
+    case 37: { 
+      // second slider - branch length
+      if (e.value < 50){
+        e.value = e.value + 50
+      }
+      branchLength1 = 350 * e.value;
+      branchLength2 = 350 * e.value;
       break;
     }
     case 38: {

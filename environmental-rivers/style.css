@@ -1,6 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  background-color: black;
 }
 
 canvas {
@@ -13,4 +14,7 @@ canvas {
   justify-content: center;
   width: 100%;
   margin: 0px;
+}
+#credit{
+  color: white;
 }
