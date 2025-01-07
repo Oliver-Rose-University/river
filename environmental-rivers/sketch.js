@@ -31,12 +31,11 @@ function setup() {
   let newCanvasY = (windowHeight)/8;
   canvas.position(newCanvasX,newCanvasY);
 
-  //
   // noLoop();
   selectNewRiver();
   setupController();
 
-  // frameRate(0.5)
+  // frameRate(1)
 
   noiseSeed(1);
 } 
