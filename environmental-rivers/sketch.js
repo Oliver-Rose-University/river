@@ -8,6 +8,7 @@ let river;
 let beginPoint;
 let endPoint;
 let riverWidth;
+let floodWarning;
 const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
@@ -55,10 +56,18 @@ function selectNewRiver(){
 }
 function drawRiver(){
   noFill()
-  // randomly derive a blueish colour
-  stroke(255, random(100), random(100), 200)
-  // set the stroke weight so that it relates somewhat to the flood level of the river
-  strokeWeight(random(5*riverWidth, 10*riverWidth))
+  // randomly derives a redish colour that coresponds to flood warnings
+  if()
+  stroke(255, random(100), random(100))
+  // set the stroke weight so that it relates severity level of the flood
+  if (riverWidth == 2){
+    strokeWeight(30)
+  } else if (riverWidth == 3){
+    strokeWeight(20)
+  } else if (riverWidth == 4)[
+    strokeWeight(10)
+  ]
+  
   // drawing routine
   beginShape()
   vertex(beginPoint.x, beginPoint.y)
@@ -95,7 +104,7 @@ function drawRiver(){
         if(ending){
           line(x2,y2,(x2+branchLength2),(y2+50))
         } else {
-          line(x2,y2,(x2+branchLength2),(y2+50))
+          line(x2,y2,(x2+branchLength2),(y2+0))
           line(x2, y2,(x2+branchLength2),(y2-50))
         }
       } else {
@@ -124,6 +133,7 @@ function drawRiver(){
 function newRiver(river) {
   // evaluate riverWidth based on severity of flooding, transforming it into a number between 1 (least severe) and 4 (most severe)
   riverWidth = 5 - river.severityLevel // original data given: 1 = worst, 4 = best
+  floodWarning = river.severity
   // calculate beginning and end points fixed to left and right edges of the canvas
   beginPoint = { x: 10, y: random(height * 0.25, height * 0.75) }
   endPoint = { x: width-10, y: random(height * 0.25, height * 0.75) }
