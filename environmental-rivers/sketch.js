@@ -206,8 +206,8 @@ function newRiver(river) {
   floodWarning = river.severity
   isTidal = river.isTidal
   // calculate beginning and end points fixed to left and right edges of the canvas
-  beginPoint = { x: 10, y: random(height * 0.25, height * 0.75) }
-  endPoint = { x: width-10, y: random(height * 0.25, height * 0.75) }
+  beginPoint = { x: 0, y: random(height * 0.25, height * 0.75) }
+  endPoint = { x: width, y: random(height * 0.25, height * 0.75) }
 }
 function drawOverlay(){
   fill(255)
