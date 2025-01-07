@@ -107,21 +107,21 @@ function draw() {
 function drawRiver(){
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
-  if(floodWarning == "Flood warning"){
+  if(floodWarning == "Flood alert"){
+    stroke(200, random(80), random(80))
+  } else if(floodWarning == "Flood warning"){
+    stroke(150, random(40), random(40))
+  } else{
     stroke(255, random(100), random(100))
-  } else if(floodWarning == "Flood alert"){
-    stroke(255, random(100), random(100))
-
-
   }
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2){
-    strokeWeight(30)
+    strokeWeight(25)
   } else if (riverWidth == 3){
-    strokeWeight(20)
-  } else if (riverWidth == 4)[
-    strokeWeight(10)
-  ]
+    strokeWeight(15)
+  } else if (riverWidth == 4){
+    strokeWeight(5)
+  }
   
   // drawing routine
   beginShape()
