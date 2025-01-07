@@ -43,7 +43,7 @@ function setup() {
   selectNewRiver();
   setupController();
 
-  frameRate(1)
+  frameRate(20)
 
   noiseSeed(1);
 
@@ -83,7 +83,7 @@ function selectNewRiver(){
 
 function drawBackground() {
   noStroke();
-  background(220);
+  //background(220);
   for (y = 0; y < height; y+= cellSize){
     for (x = 0; x < width; x+= cellSize){
       let n = noise(x * 0.005,y * 0.005);
@@ -107,7 +107,7 @@ function drawBackground() {
 }
 
 function draw() {
-
+  background(0,20);
   drawBackground();
 
   drawRiver();
@@ -120,11 +120,11 @@ function draw() {
 function drawRiver(){
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
-  let r;
-  let g;
-  let b;
+  //let r;
+  //let g;
+  //let b;//
 
-  if(floodWarning == "Flood alert"){
+  /*if(floodWarning == "Flood alert"){
     r = 200
     g = random(80)
     b = random(80)
@@ -136,7 +136,7 @@ function drawRiver(){
     r = 255
     g = random(100)
     b = random(100)
-  }
+  }*/
   stroke(r,g,b)
 
   // set the stroke weight so that it relates severity level of the flood
