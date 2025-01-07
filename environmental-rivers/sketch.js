@@ -2,7 +2,12 @@
 This template visualises UK flood data by cycling through 1 river at a time
 */
 
-let alpha = 255;
+// colours variables used for MIDI control sliders
+let alpha = 255; // skintone transparency
+let r;
+let g;
+let b;
+
 let myData;
 let index;
 let river;
@@ -15,6 +20,7 @@ const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
 const cellSize = 3;
 
+
 function preload() {
   // API definition - https://environment.data.gov.uk/flood-monitoring/doc/reference
   // local saved version of data best for frequent testing
@@ -24,21 +30,28 @@ function preload() {
   // myData will represent an array of river objects containing data for each river
 }
 function setup() {
-
+  
+  
   //canvas position - Olie
   let canvas = createCanvas(innerWidth, 0.75 * innerHeight);
   canvas.id("canvas");let newCanvasX = (windowWidth)-width;
   let newCanvasY = (windowHeight)/8;
   canvas.position(newCanvasX,newCanvasY);
-
+  
   //
   // noLoop();
   selectNewRiver();
   setupController();
-
+  
   // frameRate(0.5)
-
+  
   noiseSeed(1);
+
+
+  // river colours
+  r = random(255);
+  g = random(100);
+  b = random(100);
 } 
 function selectNewRiver(){
   // reset background (deletes all previous drawing)
@@ -65,7 +78,7 @@ function selectNewRiver(){
   // draw the info text
   drawOverlay();
   // move to the next river after a given number of milliseconds
-  setTimeout(selectNewRiver,5000);
+  //setTimeout(selectNewRiver,5000);
 }
 
 function drawBackground() {
@@ -108,12 +121,21 @@ function drawRiver(){
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
   if(floodWarning == "Flood warning"){
-    stroke(255, random(100), random(100))
+    r = 150;
+    g = random(40);
+    b = random(40);
+
   } else if(floodWarning == "Flood alert"){
-    stroke(255, random(100), random(100))
-
-
+    r = 200;
+    g = random(80);
+    b = random(80);
+  } else {
+    r = 255;
+    g = random(100);
+    b = random(100);
   }
+  stroke(r,g,b);
+  
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2){
     strokeWeight(30)
@@ -215,9 +237,7 @@ function allCC(e) {
   console.log('controller:', e.controller.number,'value:',  e.value);
   switch (e.controller.number) {
     case 32: { /* first dial */
-      /* alphaaaaaaa transparency change here*/
       alpha = e.value * 255;
-
       break;
     }
     case 33: {
@@ -231,7 +251,18 @@ function allCC(e) {
       break;
     }
     case 36: { /* first slider */
-      /* */
+      
+      if(floodWarning == "Flood warning"){
+        r = map(e.value, 0, 1, 150, 255);
+        //g = e.value *100;
+        b = map(e.value, 0, 1, 255, 150)
+        } else if(floodWarning == "Flood alert"){
+         //r = e.value *200;
+         r = map(e.value, 0, 1, 150, 255);
+         //g = e.value * 100;
+         //b = e.value *255;
+         b = map(e.value, 0, 1, 255, 150)
+        }
       break;
     }
     case 37: {
