@@ -36,7 +36,7 @@ function setup() {
   selectNewRiver();
   setupController();
 
-  // frameRate(1)
+  frameRate(1)
 
   noiseSeed(1);
 } 
@@ -175,6 +175,7 @@ function drawRiver(){
           line(x2, y2,(x2+branchLength2),(y2-50))
         }
 
+        // circles appear on river (clots) if river is tital (even if only one of them is)
         if(isTidal == true && (i == point1 || i == point3 )){
           fill(150, random(40), random(40))
           circle(x,y,30)
