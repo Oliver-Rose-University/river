@@ -44,10 +44,10 @@ function selectNewRiver(){
   // reset background (deletes all previous drawing)
   // background(0)
   fill(255)
-  textSize(36);
-  textAlign(CENTER, CENTER);
-  text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
-  textAlign(LEFT, TOP);
+  // textSize(26);
+  // textAlign(CENTER, CENTER);
+  // text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
+  // textAlign(LEFT, TOP);
   // choose a new river index at random
   index = floor(random(myData.items.length - 1))
   // assign the current river data object for ease of reference
@@ -195,9 +195,6 @@ function drawRiver(){
         }
       }    
     }
-
-    // uncomment circle to see exactly where each vertex is placed
-    // circle(x, y, 100)
   }
   vertex(endPoint.x, endPoint.y)
 
@@ -215,13 +212,17 @@ function newRiver(river) {
 function drawOverlay(){
   fill(255)
   noStroke()
-  textSize(24);
+  textSize(20);
   // draw river name
+
   text(river.description, 50, 50);
   textSize(18);
-  // draw flood message or if empty use blank message rather than show an empty string
-  let message = river.message.trim() || BLANKMESSAGE; // trim() removes leading white space
-  // text(message, 50, 100, width/2);
+
+  textSize(20);
+  textAlign(CENTER, CENTER);
+  text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
+  textAlign(LEFT, TOP);
+
 }
 
 
@@ -253,7 +254,13 @@ function allCC(e) {
       /* */
       break;
     }
-    case 37: {
+    case 37: { 
+      // second slider - branch length
+      if (e.value < 50){
+        e.value = e.value + 50
+      }
+      branchLength1 = 350 * e.value;
+      branchLength2 = 350 * e.value;
       break;
     }
     case 38: {
