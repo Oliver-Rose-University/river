@@ -62,21 +62,14 @@ function drawRiver(){
   // drawing routine
   beginShape()
   vertex(beginPoint.x, beginPoint.y)
-  let segments = 5;
+  let segments = 8;
 
-  let point1 = parseInt(random(1,4))
-  let point2 = parseInt(random(1,4))
-  let point3 = parseInt(random(1,4))
+  let point1 = parseInt(random(1,7))
+  let point2 = parseInt(random(1,7))
+  let point3 = parseInt(random(1,7))
+  let point4 = parseInt(random(1,7))
 
   let x, y;
-  
-  // function newBranch(){
-  //   let x2 = random(x, x+250)
-  //   let y2 = random(y-250, y+250)
-  //   line(x,y,x2, y2)
-  //   x2 = x;
-  //   y2 = y
-  // }
   
   // make a slightly wiggly line between the start and end point of the river
   for (let i = 1; i < segments; i++) {
@@ -85,8 +78,9 @@ function drawRiver(){
     vertex(x,y)
 
 
-    if (i == point1 || i == point2 || i == point3){
+    if (i == point1 || i == point2 || i == point3 || i == point4){
       let beginning = random(0, 1) < 0.5;
+      let ending = random(0,1) < 0.5;
 
       // coordinate change varibale
       let branchLength1 = 250;
@@ -96,18 +90,26 @@ function drawRiver(){
         // second branches
         let x2 = random(x, x+branchLength1)
         let y2 = random(y-branchLength1, y+branchLength1)
-        line(x,y,x2,y2)
+        line(x,y,x2,y2);
         // third branches
-        line(x2,y2,(x2+branchLength2),(y2+50))
-        line(x2, y2,(x2+branchLength2),(y2-50))
+        if(ending){
+          line(x2,y2,(x2+branchLength2),(y2+50))
+        } else {
+          line(x2,y2,(x2+branchLength2),(y2+50))
+          line(x2, y2,(x2+branchLength2),(y2-50))
+        }
       } else {
         // second branches
         let x2 = random(x, x+branchLength1)
         let y2 = random(y-branchLength1, y+branchLength1)
         line(x,y,x2,y2)
         // third branches
-        line(x2,y2,(x2+branchLength2),(y2+50))
-        line(x2, y2,(x2+branchLength2),(y2-50))
+        if(ending){
+          line(x2,y2,(x2+branchLength2),(y2+50))
+        } else {
+          line(x2,y2,(x2+branchLength2),(y2+50))
+          line(x2, y2,(x2+branchLength2),(y2-50))
+        }
 
       }    
     }
