@@ -107,13 +107,25 @@ function draw() {
 function drawRiver(){
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
+  let r;
+  let g;
+  let b;
+
   if(floodWarning == "Flood alert"){
-    stroke(200, random(80), random(80))
+    r = 200
+    g = random(80)
+    b = random(80)
   } else if(floodWarning == "Flood warning"){
-    stroke(150, random(40), random(40))
+    r = 150 
+    g = random(40)
+    b= random(40)
   } else {
-    stroke(255, random(100), random(100))
+    r = 255
+    g = random(100)
+    b = random(100)
   }
+  stroke(r,g,b)
+
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2){
     strokeWeight(25)
@@ -177,7 +189,7 @@ function drawRiver(){
 
         // circles appear on river (clots) if river is tital (even if only one of them is)
         if(isTidal == true && (i == point1 || i == point3 )){
-          fill(150, random(40), random(40))
+          fill(r,g,b)
           circle(x,y,30)
           noFill()
         }
