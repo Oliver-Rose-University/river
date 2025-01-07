@@ -2,6 +2,7 @@
 This template visualises UK flood data by cycling through 1 river at a time
 */
 
+let alpha = 255;
 let myData;
 let index;
 let river;
@@ -35,7 +36,7 @@ function setup() {
   selectNewRiver();
   setupController();
 
-  frameRate(0.5)
+  // frameRate(0.5)
 
   noiseSeed(1);
 } 
@@ -64,7 +65,7 @@ function selectNewRiver(){
   // draw the info text
   drawOverlay();
   // move to the next river after a given number of milliseconds
-  // setTimeout(selectNewRiver,5000);
+  setTimeout(selectNewRiver,5000);
 }
 
 function drawBackground() {
@@ -73,19 +74,18 @@ function drawBackground() {
   for (y = 0; y < height; y+= cellSize){
     for (x = 0; x < width; x+= cellSize){
       let n = noise(x * 0.005,y * 0.005);
-      console.log(n);
       
       if (n < 0.25){
-        fill(216, 150, 91);
+        fill(216, 150, 91, alpha);
       }
       else if (n < 0.5){
-        fill(200, 125, 80)
+        fill(200, 125, 80, alpha);
       }
       else if (n < 0.75){
-        fill(185, 115, 70)
+        fill(185, 115, 70, alpha);
       }
       else{
-        fill(189, 105, 64)
+        fill(189, 105, 64, alpha);
       }
       rect(x, y, cellSize);
     }
@@ -97,7 +97,11 @@ function draw() {
 
   drawBackground();
 
-  selectNewRiver();
+  drawRiver();
+  drawOverlay();
+
+
+  // selectNewRiver();
 }
 
 function drawRiver(){
@@ -206,22 +210,28 @@ function drawOverlay(){
  * React to inputs from the control change sliders in the Midi controller
  * @param {Event} e 
  */
+/* reacts to sliders and dials */
 function allCC(e) {
   console.log('controller:', e.controller.number,'value:',  e.value);
   switch (e.controller.number) {
-    case 32: {
+    case 32: { /* first dial */
+      /* alphaaaaaaa transparency change here*/
+      alpha = e.value * 255;
+
       break;
     }
     case 33: {
+      noiseSeed(e.value*10);
       break;
     }
     case 34: {
       break;
     }
-    case 35: {
+    case 35: { /* last dial */
       break;
     }
-    case 36: {
+    case 36: { /* first slider */
+      /* */
       break;
     }
     case 37: {
@@ -230,12 +240,11 @@ function allCC(e) {
     case 38: {
       break;
     }
-    case 39: {
+    case 39: { /* last slider */
       break;
     }
   }
 }
-
 /**
  * React to inputs from the bottom buttons on the controller
  * @param {Event} e 
