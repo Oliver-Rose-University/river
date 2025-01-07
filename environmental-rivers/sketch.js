@@ -87,38 +87,33 @@ function drawRiver(){
 
     if (i == point1 || i == point2 || i == point3){
       let beginning = random(0, 1) < 0.5;
+
+      // coordinate change varibale
+      let branchLength1 = 250;
+      let branchLength2 = 150;
+
       if(beginning){
         // second branches
-        let x2 = random(x, x+250)
-        let y2 = random(y-250, y+250)
+        let x2 = random(x, x+branchLength1)
+        let y2 = random(y-branchLength1, y+branchLength1)
         line(x,y,x2,y2)
-
-        line(x2,y2,(x2+150),(y2+50))
-        line(x2, y2,(x2+150),(y2-50))
+        // third branches
+        line(x2,y2,(x2+branchLength2),(y2+50))
+        line(x2, y2,(x2+branchLength2),(y2-50))
       } else {
         // second branches
-        let x2 = random(x, x+250)
-        let y2 = random(y-250, y+250)
-        line(x,y,x2, y2)
-
-        line(x2,y2,(x2+150),(y2+50))
-        line(x2, y2,(x2+150),(y2-50))
+        let x2 = random(x, x+branchLength1)
+        let y2 = random(y-branchLength1, y+branchLength1)
+        line(x,y,x2,y2)
+        // third branches
+        line(x2,y2,(x2+branchLength2),(y2+50))
+        line(x2, y2,(x2+branchLength2),(y2-50))
 
       }    
     }
 
     // uncomment circle to see exactly where each vertex is placed
     // circle(x, y, 100)
-
-    let x2 = random(x,x+250);
-    let y2 = random(y-250,y+250);
-  
-    // line(x,y, x2,y2)
-
-    let x3 = random(x2,x2+200);
-    let y3 = random(y2-200,y2+200);
-
-    // line(x2, y2, x3, y3)
   }
   vertex(endPoint.x, endPoint.y)
 
