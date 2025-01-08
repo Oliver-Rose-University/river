@@ -4,18 +4,22 @@ This template visualises UK flood data by cycling through 1 river at a time
 
 // colours variables used for MIDI control sliders
 let alpha = 255; // skintone transparency
-let r;
+let r;  // individual rgb variables
 let g;
 let b;
+
 
 let myData;
 let index;
 let river;
-let beginPoint;
+let beginPoint; 
 let endPoint;
-let riverWidth;
+let riverWidth; 
+let branchLength1;
+let branchLength2;
 let floodWarning;
-let isTidal;
+let isTidal; // boolean
+
 const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
@@ -248,11 +252,11 @@ function allCC(e) {
   console.log('controller:', e.controller.number,'value:',  e.value);
   switch (e.controller.number) {
     case 32: { /* first dial */
-      alpha = e.value * 255;
+      alpha = e.value * 255; //background transparency
       break;
     }
     case 33: {
-      noiseSeed(e.value*10);
+      noiseSeed(e.value*10); //change background seed
       break;
     }
     case 34: {
@@ -263,16 +267,16 @@ function allCC(e) {
     }
     case 36: { /* first slider */
       
-      if(floodWarning == "Flood warning"){
-        r = map(e.value, 0, 1, 150, 255);
+      if(floodWarning == "Flood warning"){ // changes colour of river (?)
+        r = map(e.value, 0, 1, 255, 150);
         //g = e.value *100;
-        b = map(e.value, 0, 1, 255, 150)
+        b = map(e.value, 0, 1, 150, 255)
         } else if(floodWarning == "Flood alert"){
          //r = e.value *200;
-         r = map(e.value, 0, 1, 150, 255);
+         r = map(e.value, 0, 1, 255, 150);
          //g = e.value * 100;
          //b = e.value *255;
-         b = map(e.value, 0, 1, 255, 150)
+         b = map(e.value, 0, 1, 150, 255)
         }
       break;
     }
@@ -302,7 +306,9 @@ function allNoteOn(e) {
   switch (e.data[1]) {
     case 40: {
       if (e.value) {
+        noLoop()
       } else {
+        loop()
       }
       break;
     }
