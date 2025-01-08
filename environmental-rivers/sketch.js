@@ -19,6 +19,7 @@ let branchLength1 = 250;
 let branchLength2 = 150;
 let floodWarning;
 let isTidal; // boolean
+let floodDescription; // flood description - optional
 
 let numberOfPoints = 5;
 
@@ -311,14 +312,14 @@ function allNoteOn(e) {
   switch (e.data[1]) {
     case 40: {
       if (e.value) { // stops the loop
-        noLoop()
+        noLoop() // small error when held for too long, different text and rivers overlay
       } else {
         loop()
       }
       break;
     }
     case 41: {
-      if (e.value) {
+      if (e.value) { // shows river info text
       } else {
       }
       break;
