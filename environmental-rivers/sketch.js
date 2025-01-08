@@ -320,7 +320,9 @@ function allNoteOn(e) {
     }
     case 41: {
       if (e.value) { // shows river info text
+        // if button held, show info, middle of the screen(?) diana's idea lol
       } else {
+        // dont show any river info
       }
       break;
     }

@@ -18,3 +18,10 @@ canvas {
 #credit{
   color: white;
 }
+
+#river-info{
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
