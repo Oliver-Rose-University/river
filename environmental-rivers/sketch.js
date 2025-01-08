@@ -12,13 +12,15 @@ let b;
 let myData;
 let index;
 let river;
-let beginPoint; 
+let beginPoint;
 let endPoint;
-let riverWidth; 
-let branchLength1;
-let branchLength2;
+let riverWidth;
+let branchLength1 = 250;
+let branchLength2 = 150;
 let floodWarning;
 let isTidal; // boolean
+
+let numberOfPoints = 5;
 
 const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
@@ -35,19 +37,20 @@ function preload() {
   // myData will represent an array of river objects containing data for each river
 }
 function setup() {
-  
-  
+
+
   //canvas position - Olie
   let canvas = createCanvas(innerWidth, 0.75 * innerHeight);
-  canvas.id("canvas");let newCanvasX = (windowWidth)-width;
-  let newCanvasY = (windowHeight)/8;
-  canvas.position(newCanvasX,newCanvasY);
+  canvas.id("canvas"); let newCanvasX = (windowWidth) - width;
+  let newCanvasY = (windowHeight) / 8;
+  canvas.position(newCanvasX, newCanvasY);
 
   // noLoop();
   selectNewRiver();
   setupController();
+  setInterval(selectNewRiver, 5000);
 
-  frameRate(20)
+  frameRate(15)
 
   noiseSeed(1);
 
@@ -56,8 +59,8 @@ function setup() {
   r = random(255);
   g = random(100);
   b = random(100);
-} 
-function selectNewRiver(){
+}
+function selectNewRiver() {
   // reset background (deletes all previous drawing)
   // background(0)
   fill(255)
@@ -82,26 +85,25 @@ function selectNewRiver(){
   // draw the info text
   drawOverlay();
   // move to the next river after a given number of milliseconds
-  //setTimeout(selectNewRiver,5000);
 }
 
 function drawBackground() {
   noStroke();
   //background(220);
-  for (y = 0; y < height; y+= cellSize){
-    for (x = 0; x < width; x+= cellSize){
-      let n = noise(x * 0.005,y * 0.005);
-      
-      if (n < 0.25){
+  for (y = 0; y < height; y += cellSize) {
+    for (x = 0; x < width; x += cellSize) {
+      let n = noise(x * 0.005, y * 0.005);
+
+      if (n < 0.25) {
         fill(216, 150, 91, alpha);
       }
-      else if (n < 0.5){
+      else if (n < 0.5) {
         fill(200, 125, 80, alpha);
       }
-      else if (n < 0.75){
+      else if (n < 0.75) {
         fill(185, 115, 70, alpha);
       }
-      else{
+      else {
         fill(189, 105, 64, alpha);
       }
       rect(x, y, cellSize);
@@ -111,7 +113,7 @@ function drawBackground() {
 }
 
 function draw() {
-  background(0,20);
+  background(0, 20);
   drawBackground();
 
   drawRiver();
@@ -121,7 +123,7 @@ function draw() {
   // selectNewRiver();
 }
 
-function drawRiver(){
+function drawRiver() {
   noFill()
   // randomly derives a redish colour that coresponds to flood warnings
   //let r;
@@ -141,76 +143,77 @@ function drawRiver(){
     g = random(100)
     b = random(100)
   }*/
-  stroke(r,g,b)
+  stroke(r, g, b)
 
   // set the stroke weight so that it relates severity level of the flood
-  if (riverWidth == 2){
+  if (riverWidth == 2) {
     strokeWeight(25)
-  } else if (riverWidth == 3){
+  } else if (riverWidth == 3) {
     strokeWeight(15)
   } else {
     strokeWeight(5)
   }
-  
+
+
   // drawing routine
   beginShape()
   vertex(beginPoint.x, beginPoint.y)
   let segments = 8;
+  let points = [];
+  for (let i = 0; i < numberOfPoints; i++) {
+    points.push(parseInt(random(1, 7)));
+  }
 
-  let point1 = parseInt(random(1,7))
-  let point2 = parseInt(random(1,7))
-  let point3 = parseInt(random(1,7))
-  let point4 = parseInt(random(1,7))
 
   let x, y;
-  
+
   // make a slightly wiggly line between the start and end point of the river
   for (let i = 1; i < segments; i++) {
     x = width / segments * i;
-    y = height/2 + random(riverWidth * -50, riverWidth * 50)
-    vertex(x,y)
+    y = height / 2 + random(riverWidth * -50, riverWidth * 50)
+    vertex(x, y)
+
+    for (let j = 0; j < numberOfPoints; j++) {
+      if (i==points[j]) {
+        let beginning = random(0, 1) < 0.5;
+        let ending = random(0, 1) < 0.5;
+
+        // coordinate change varibale
 
 
-    if (i == point1 || i == point2 || i == point3 || i == point4){
-      let beginning = random(0, 1) < 0.5;
-      let ending = random(0,1) < 0.5;
-
-      // coordinate change varibale
-      let branchLength1 = 250;
-      let branchLength2 = 150;
-
-      if(beginning){
-        // second branches
-        let x2 = random(x, x+branchLength1)
-        let y2 = random(y-branchLength1, y+branchLength1)
-        line(x,y,x2,y2);
-        // third branches
-        if(ending){
-          line(x2,y2,(x2+branchLength2),(y2+50))
+        if (beginning) {
+          // second branches
+          let x2 = random(x, x + branchLength1)
+          let y2 = random(y - branchLength1, y + branchLength1)
+          line(x, y, x2, y2);
+          // third branches
+          if (ending) {
+            line(x2, y2, (x2 + branchLength2), (y2 + 50))
+          } else {
+            line(x2, y2, (x2 + branchLength2), (y2 + 0))
+            line(x2, y2, (x2 + branchLength2), (y2 - 50))
+          }
         } else {
-          line(x2,y2,(x2+branchLength2),(y2+0))
-          line(x2, y2,(x2+branchLength2),(y2-50))
-        }
-      } else {
-        // second branches
-        let x2 = random(x, x+branchLength1)
-        let y2 = random(y-branchLength1, y+branchLength1)
-        line(x,y,x2,y2)
-        // third branches
-        if(ending){
-          line(x2,y2,(x2+branchLength2),(y2+50))
-        } else {
-          line(x2,y2,(x2+branchLength2),(y2+50))
-          line(x2, y2,(x2+branchLength2),(y2-50))
-        }
+          // second branches
+          let x2 = random(x, x + branchLength1)
+          let y2 = random(y - branchLength1, y + branchLength1)
+          line(x, y, x2, y2)
+          // third branches
+          if (ending) {
+            line(x2, y2, (x2 + branchLength2), (y2 + 50))
+          } else {
+            line(x2, y2, (x2 + branchLength2), (y2 + 50))
+            line(x2, y2, (x2 + branchLength2), (y2 - 50))
+          }
 
-        // circles appear on river (clots) if river is tital (even if only one of them is)
-        if(isTidal == true && (i == point1 || i == point3 )){
-          fill(r,g,b)
-          circle(x,y,30)
-          noFill()
+          // circles appear on river (clots) if river is tital (even if only one of them is)
+          if (isTidal == true && (i == point1 || i == point3)) {
+            fill(r, g, b)
+            circle(x, y, 30)
+            noFill()
+          }
         }
-      }    
+      }
     }
   }
   vertex(endPoint.x, endPoint.y)
@@ -226,7 +229,7 @@ function newRiver(river) {
   beginPoint = { x: 0, y: random(height * 0.25, height * 0.75) }
   endPoint = { x: width, y: random(height * 0.25, height * 0.75) }
 }
-function drawOverlay(){
+function drawOverlay() {
   fill(255)
   noStroke()
   textSize(20);
@@ -237,7 +240,7 @@ function drawOverlay(){
 
   textSize(20);
   textAlign(CENTER, CENTER);
-  text(HEADERTEXT, width/2, height - BOTTOMMARGIN/2);
+  text(HEADERTEXT, width / 2, height - BOTTOMMARGIN / 2);
   textAlign(LEFT, TOP);
 
 }
@@ -248,48 +251,50 @@ function drawOverlay(){
  * @param {Event} e 
  */
 /* reacts to sliders and dials */
+
+// note - dials change background, sliders change river features, 1st button stops the loop when held
 function allCC(e) {
-  console.log('controller:', e.controller.number,'value:',  e.value);
+  console.log('controller:', e.controller.number, 'value:', e.value);
   switch (e.controller.number) {
     case 32: { /* first dial */
       alpha = e.value * 255; //background transparency
       break;
     }
     case 33: {
-      noiseSeed(e.value*10); //change background seed
+      noiseSeed(e.value * 10); //change background seed
       break;
     }
     case 34: {
+
       break;
     }
     case 35: { /* last dial */
       break;
     }
     case 36: { /* first slider */
-      
-      if(floodWarning == "Flood warning"){ // changes colour of river (?)
+
+       // changes colour of river (?)
         r = map(e.value, 0, 1, 255, 150);
         //g = e.value *100;
         b = map(e.value, 0, 1, 150, 255)
-        } else if(floodWarning == "Flood alert"){
-         //r = e.value *200;
-         r = map(e.value, 0, 1, 255, 150);
-         //g = e.value * 100;
-         //b = e.value *255;
-         b = map(e.value, 0, 1, 150, 255)
-        }
+      
+
       break;
     }
-    case 37: { 
+    case 37: {
       // second slider - branch length
-      if (e.value < 50){
-        e.value = e.value + 50
-      }
-      branchLength1 = 350 * e.value;
-      branchLength2 = 350 * e.value;
+      // if (e.value < 50){
+      //   e.value = e.value + 50
+      // }
+      branchLength1 = map(e.value, 0, 1, 100, 250);
+      branchLength2 = map(e.value, 0, 1, 70, 150);
+
+
       break;
     }
     case 38: {
+      // changing number of points on a branch depending on slider
+      numberOfPoints = map(e.value, 0, 1, 1, 7);
       break;
     }
     case 39: { /* last slider */
@@ -302,10 +307,10 @@ function allCC(e) {
  * @param {Event} e 
  */
 function allNoteOn(e) {
-  console.log('controller:', e.data[1],'value:',  e.value);
+  console.log('controller:', e.data[1], 'value:', e.value);
   switch (e.data[1]) {
     case 40: {
-      if (e.value) {
+      if (e.value) { // stops the loop
         noLoop()
       } else {
         loop()
