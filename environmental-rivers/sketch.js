@@ -235,8 +235,8 @@ function drawOverlay() {
   noStroke()
   textSize(20);
   // draw river name
-
-  text(river.description, 50, 50);
+  let riverDescription = river.description
+  let riverText = text(riverDescription, 50, 50);
   textSize(18);
 
   textSize(20);
@@ -321,8 +321,10 @@ function allNoteOn(e) {
     case 41: {
       if (e.value) { // shows river info text
         // if button held, show info, middle of the screen(?) diana's idea lol
+        
       } else {
         // dont show any river info
+        
       }
       break;
     }
