@@ -53,6 +53,7 @@ function setup() {
   setInterval(selectNewRiver, 5000);
 
   frameRate(15)
+  tempFrames = frameRate(15)
 
   noiseSeed(1);
 
@@ -226,7 +227,7 @@ function drawOverlay() {
   textAlign(CENTER, CENTER);
   text(HEADERTEXT, width / 2, height - BOTTOMMARGIN / 2);
   textAlign(LEFT, TOP);
-
+  
 }
 
 
@@ -292,12 +293,17 @@ function allNoteOn(e) {
   console.log('controller:', e.data[1], 'value:', e.value);
   switch (e.data[1]) {
     case 40: {
-      if (e.value) { // stops the loop
-        noLoop() // small error when held for too long, different text and rivers overlay
-
-      } else {
-        loop()
-      }
+      //if (e.value) { // stops the loop
+        //noLoop() // small error when held for too long, different text and rivers overlay
+        //timeouttime = e.value;
+          //while (e.value){
+            //setTimeout(frameRate(), timeouttime);
+          //frameRate(0);
+          //noLoop()}
+      //} else {
+        //frameRate(tempFrames);
+        //loop()
+      //}
       break;
     }
     case 41: {
