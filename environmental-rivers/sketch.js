@@ -139,7 +139,7 @@ function drawRiver() {
   // drawing routine
   beginShape()
 
-  vertex(beginPoint.x, beginPoint.y)
+  curveVertex(beginPoint.x, beginPoint.y)
   let segments = 8;
   let points = [];
   for (let i = 0; i < numberOfPoints; i++) {
@@ -152,7 +152,7 @@ function drawRiver() {
   for (let i = 1; i < segments; i++) {
     x = width / segments * i;
     y = height / 2 + random(riverWidth * -50, riverWidth * 50)
-    vertex(x, y)
+    curveVertex(x, y)
 
     for (let j = 0; j < numberOfPoints; j++) {
       if (i == points[j]) {
@@ -167,7 +167,7 @@ function drawRiver() {
           let y2 = random(y - branchLength1, y + branchLength1)
 
           let x3 = (x2 + branchLength2)
-          let y3 = y2+50
+          let y3 = y2 + 50
 
           // line(x, y, x2, y2);
           bezier(x, y, x + 20, y + 20, x2 - 20, y2 - 20, x2, y2)
@@ -189,13 +189,15 @@ function drawRiver() {
             fill(r, g, b)
             circle(x, y, 30)
             noFill()
+
           }
         }
       }
     }
   }
 
-  vertex(endPoint.x, endPoint.y)
+
+  curveVertex(endPoint.x, endPoint.y)
 
   endShape()
 }
