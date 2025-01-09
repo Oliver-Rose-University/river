@@ -127,11 +127,11 @@ function drawRiver() {
 
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2) {
-    strokeWeight(25)
+    strokeWeight(5)
   } else if (riverWidth == 3) {
     strokeWeight(15)
   } else {
-    strokeWeight(5)
+    strokeWeight(25)
   }
 
 
