@@ -161,44 +161,43 @@ function drawRiver() {
 
         // coordinate change varibale
 
-
         if (beginning) {
           // second branches
           let x2 = random(x, x + branchLength1)
           let y2 = random(y - branchLength1, y + branchLength1)
           // line(x, y, x2, y2);
-          bezier(x, y, x2 - 12, y - 12, x + 12, y2 + 12, x2, y2)
+          bezier(x, y, x+20, y+ 20, x2 -20, y2 -20,x2, y2)
+
           // third branches
           if (ending) {
             // line(x2,y2,(x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 + 50) + 10, (x2 + branchLength2), (y2 + 50))
+            bezier(x2, y2, x2-20,y2+20, (x2 + branchLength2) -20, (y2 + 50)-20, (x2 + branchLength2), (y2 + 50))
+
           } else {
             // line(x2, y2, (x2 + branchLength2), (y2 + 0))
-            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, y2 + 10, (x2 + branchLength2), y2)
+            bezier(x2, y2, x2+20, y2+20, (x2 + branchLength2)-20, y2+50-20, (x2 + branchLength2), y2+50)
 
             // line(x2, y2, (x2 + branchLength2), (y2 - 50))
-            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 - 50) + 10, (x2 + branchLength2), (y2 - 50))
-
+            bezier(x2, y2, x2-20,y2-20,(x2 + branchLength2)+20, (y2 - 50)+20, (x2 + branchLength2), (y2 - 50))
           }
         } else {
           // second branches
           let x2 = random(x, x + branchLength1)
           let y2 = random(y - branchLength1, y + branchLength1)
           // line(x, y, x2, y2)
-          bezier(x, y, x - 12, y - 12, x + 12, y2 + 12, x2, y2)
+          bezier(x, y, x+20, y+ 20, x2 -20, y2 -20,x2, y2)
 
           // third branches
           if (ending) {
             // line(x2, y2, (x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 + 50) + 10, (x2 + branchLength2), (y2 + 50))
+            bezier(x2, y2, x2-20,y2+20, (x2 + branchLength2) -20, (y2 + 50)-20, (x2 + branchLength2), (y2 + 50))
 
           } else {
             // line(x2, y2, (x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, y2 + 10, (x2 + branchLength2), y2)
+            bezier(x2, y2, x2+20, y2+20, (x2 + branchLength2)-20, y2+50-20, (x2 + branchLength2), y2+50)
 
             // line(x2, y2, (x2 + branchLength2), (y2 - 50))
-            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 - 50) + 10, (x2 + branchLength2), (y2 - 50))
-
+            bezier(x2, y2, x2-20,y2-20,(x2 + branchLength2)+20, (y2 - 50)+20, (x2 + branchLength2), (y2 - 50))
           }
 
           // circles appear on river (clots) if river is tital (even if only one of them is)
