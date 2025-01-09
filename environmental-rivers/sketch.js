@@ -52,7 +52,7 @@ function setup() {
   setupController();
   setInterval(selectNewRiver, 5000);
 
-  frameRate(5)
+  frameRate(15)
 
   noiseSeed(1);
 
@@ -139,7 +139,10 @@ function drawRiver() {
   // drawing routine
   beginShape()
 
-  curveVertex(beginPoint.x, beginPoint.y)
+  // curveVertex(beginPoint.x, beginPoint.y)
+  vertex(beginPoint.x, beginPoint.y)
+
+
   let segments = 8;
   let points = [];
   for (let i = 0; i < numberOfPoints; i++) {
@@ -148,11 +151,75 @@ function drawRiver() {
 
   let x, y;
 
+  curveVertex(0, height / 2 );
+
+  let yVector = [];
+
   // make a slightly wiggly line between the start and end point of the river
   for (let i = 1; i < segments; i++) {
     x = width / segments * i;
     y = height / 2 + random(riverWidth * -50, riverWidth * 50)
+    yVector.push(y);
     curveVertex(x, y)
+    // vertex(x,y)
+    // bezierVertex(x - 5, y - 5, x + 5, y + 5, x, y)
+
+    for (let j = 0; j < numberOfPoints; j++) {
+      if (i == points[j]) {
+        let beginning = random(0, 1) < 0.5;
+        let ending = random(0, 1) < 0.5;
+
+        // coordinate change varibale
+
+        if (beginning) {
+          // second branches
+          let x2 = random(x, x + branchLength1)
+          let y2 = random(y - branchLength1, y + branchLength1)
+
+          let x3 = (x2 + branchLength2)
+          let y3 = y2 + 50
+
+          // line(x, y, x2, y2);
+          // bezier(x, y, x + 20, y + 20, x2 - 20, y2 - 20, x2, y2)
+
+          // // third branches
+          if (ending) {
+            // line(x2,y2,x3, y3)
+          //   bezier(x2, y2, x2 - 20, y2 + 20, x3 - 20, y3 - 20, x3, y3)
+
+          } else {
+            // line(x2, y2, x3,y3)
+          //   bezier(x2, y2, x2 + 20, y2 + 20, x3 - 20, y3 - 20, x3, y3)
+
+            // line(x2, y2, x3, (y2 - 50))
+          //   bezier(x2, y2, x2 - 20, y2 - 20, x3 + 20, (y2 - 50) + 20, x3, (y2 - 50))
+          // }
+          // circles appear on river (clots) if river is tital (even if only one of them is)
+          if (isTidal == true && (i == point1 || i == point3)) {
+            fill(r, g, b)
+            circle(x, y, 30)
+            noFill()
+          }
+
+          }
+        }
+      }
+    }
+  }
+
+
+  curveVertex(endPoint.x, endPoint.y)
+  curveVertex(endPoint.x, endPoint.y)
+  // vertex(endPoint.x, endPoint.y)
+
+
+  endShape()
+
+  for (let i = 1; i < segments; i++) {
+    x = width / segments * i;
+    y = yVector[i - 1];
+    // vertex(x,y)
+    // bezierVertex(x - 5, y - 5, x + 5, y + 5, x, y)
 
     for (let j = 0; j < numberOfPoints; j++) {
       if (i == points[j]) {
@@ -171,8 +238,9 @@ function drawRiver() {
 
           // line(x, y, x2, y2);
           bezier(x, y, x + 20, y + 20, x2 - 20, y2 - 20, x2, y2)
+          // curve(x + 20, y + 20, x, y, x2, y2, x2 + 20, y2 + 20);
 
-          // third branches
+          // // third branches
           if (ending) {
             // line(x2,y2,x3, y3)
             bezier(x2, y2, x2 - 20, y2 + 20, x3 - 20, y3 - 20, x3, y3)
@@ -183,23 +251,15 @@ function drawRiver() {
 
             // line(x2, y2, x3, (y2 - 50))
             bezier(x2, y2, x2 - 20, y2 - 20, x3 + 20, (y2 - 50) + 20, x3, (y2 - 50))
-          }
+          // }
           // circles appear on river (clots) if river is tital (even if only one of them is)
-          if (isTidal == true && (i == point1 || i == point3)) {
-            fill(r, g, b)
-            circle(x, y, 30)
-            noFill()
 
           }
         }
       }
     }
   }
-
-
-  curveVertex(endPoint.x, endPoint.y)
-
-  endShape()
+  // noLoop();
 }
 function newRiver(river) {
   // evaluate riverWidth based on severity of flooding, transforming it into a number between 1 (least severe) and 4 (most severe)
