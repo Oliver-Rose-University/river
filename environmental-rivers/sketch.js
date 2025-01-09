@@ -172,8 +172,6 @@ function drawRiver() {
         let beginning = random(0, 1) < 0.5;
         let ending = random(0, 1) < 0.5;
 
-        // coordinate change varibale
-
         if (beginning) {
           // second branches
           let x2 = random(x, x + branchLength1)
