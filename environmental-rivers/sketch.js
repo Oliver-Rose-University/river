@@ -20,6 +20,7 @@ let branchLength2 = 150;
 let floodWarning;
 let isTidal; // boolean
 let floodDescription; // flood description - optional
+let showMessage = false
 
 let numberOfPoints = 5;
 
@@ -216,6 +217,9 @@ function drawOverlay() {
   // draw river name
   let riverDescription = river.description
   let riverText = text(riverDescription, 50, 50);
+  if(showMessage == true){
+    text(river.message, 50, 100, 1000);
+  }
   textSize(18);
 
   textSize(20);
@@ -297,10 +301,10 @@ function allNoteOn(e) {
     case 41: {
       if (e.value) { // shows river info text
         // if button held, show info, middle of the screen(?) diana's idea lol
-        
+        showMessage = true;
       } else {
         // dont show any river info
-        
+        showMessage = false;
       }
       break;
     }
