@@ -47,7 +47,7 @@ function setup() {
   let newCanvasY = (windowHeight) / 8;
   canvas.position(newCanvasX, newCanvasY);
 
-  // noLoop();
+  //noLoop();
   selectNewRiver();
   setupController();
   setInterval(selectNewRiver, 5000);
@@ -293,6 +293,7 @@ function allNoteOn(e) {
     case 40: {
       if (e.value) { // stops the loop
         noLoop() // small error when held for too long, different text and rivers overlay
+
       } else {
         loop()
       }
