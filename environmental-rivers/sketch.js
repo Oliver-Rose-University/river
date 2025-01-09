@@ -165,20 +165,24 @@ function drawRiver() {
           // second branches
           let x2 = random(x, x + branchLength1)
           let y2 = random(y - branchLength1, y + branchLength1)
+
+          let x3 = (x2 + branchLength2)
+          let y3 = y2+50
+
           // line(x, y, x2, y2);
           bezier(x, y, x + 20, y + 20, x2 - 20, y2 - 20, x2, y2)
 
           // third branches
           if (ending) {
-            // line(x2,y2,(x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, x2 - 20, y2 + 20, (x2 + branchLength2) - 20, (y2 + 50) - 20, (x2 + branchLength2), (y2 + 50))
+            // line(x2,y2,x3, y3)
+            bezier(x2, y2, x2 - 20, y2 + 20, x3 - 20, y3 - 20, x3, y3)
 
           } else {
-            // line(x2, y2, (x2 + branchLength2), (y2 + 0))
-            bezier(x2, y2, x2 + 20, y2 + 20, (x2 + branchLength2) - 20, y2 + 50 - 20, (x2 + branchLength2), y2 + 50)
+            // line(x2, y2, x3,y3)
+            bezier(x2, y2, x2 + 20, y2 + 20, x3 - 20, y3 - 20, x3, y3)
 
-            // line(x2, y2, (x2 + branchLength2), (y2 - 50))
-            bezier(x2, y2, x2 - 20, y2 - 20, (x2 + branchLength2) + 20, (y2 - 50) + 20, (x2 + branchLength2), (y2 - 50))
+            // line(x2, y2, x3, (y2 - 50))
+            bezier(x2, y2, x2 - 20, y2 - 20, x3 + 20, (y2 - 50) + 20, x3, (y2 - 50))
           }
           // circles appear on river (clots) if river is tital (even if only one of them is)
           if (isTidal == true && (i == point1 || i == point3)) {
