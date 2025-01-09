@@ -20,7 +20,7 @@ let branchLength2 = 150;
 let floodWarning;
 let isTidal; // boolean
 let floodDescription; // flood description - optional
-let showMessage = false
+let showMessage = false;
 
 let numberOfPoints = 5;
 
@@ -28,7 +28,7 @@ const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
 const cellSize = 3;
-
+let riverInterval;
 
 function preload() {
   // API definition - https://environment.data.gov.uk/flood-monitoring/doc/reference
@@ -50,7 +50,7 @@ function setup() {
   //noLoop();
   selectNewRiver();
   setupController();
-  setInterval(selectNewRiver, 5000);
+  riverInterval = setInterval(selectNewRiver, 5000);
 
   frameRate(15)
   tempFrames = frameRate(15)
@@ -228,6 +228,7 @@ function drawOverlay() {
   text(HEADERTEXT, width / 2, height - BOTTOMMARGIN / 2);
   textAlign(LEFT, TOP);
   
+  redraw();
 }
 
 
@@ -293,17 +294,13 @@ function allNoteOn(e) {
   console.log('controller:', e.data[1], 'value:', e.value);
   switch (e.data[1]) {
     case 40: {
-      //if (e.value) { // stops the loop
-        //noLoop() // small error when held for too long, different text and rivers overlay
-        //timeouttime = e.value;
-          //while (e.value){
-            //setTimeout(frameRate(), timeouttime);
-          //frameRate(0);
-          //noLoop()}
-      //} else {
-        //frameRate(tempFrames);
-        //loop()
-      //}
+      if (e.value) { // stops the loop
+            noLoop()
+            clearInterval(riverInterval);
+      } else {
+        riverInterval = setInterval(selectNewRiver, 5000);
+        loop()
+      }
       break;
     }
     case 41: {
