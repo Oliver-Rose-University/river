@@ -80,9 +80,6 @@ function selectNewRiver() {
   // drawy the river
   drawRiver();
 
-  // newRiver(river);
-  // drawRiver();
-
   // draw the info text
   drawOverlay();
   // move to the next river after a given number of milliseconds
@@ -126,33 +123,15 @@ function draw() {
 
 function drawRiver() {
   noFill()
-  // randomly derives a redish colour that coresponds to flood warnings
-  //let r;
-  //let g;
-  //let b;//
-
-  /*if(floodWarning == "Flood alert"){
-    r = 200
-    g = random(80)
-    b = random(80)
-  } else if(floodWarning == "Flood warning"){
-    r = 150 
-    g = random(40)
-    b= random(40)
-  } else {
-    r = 255
-    g = random(100)
-    b = random(100)
-  }*/
   stroke(r, g, b)
 
   // set the stroke weight so that it relates severity level of the flood
   if (riverWidth == 2) {
-    strokeWeight(25)
+    strokeWeight(5)
   } else if (riverWidth == 3) {
     strokeWeight(15)
   } else {
-    strokeWeight(5)
+    strokeWeight(25)
   }
 
 
@@ -284,9 +263,6 @@ function allCC(e) {
     }
     case 37: {
       // second slider - branch length
-      // if (e.value < 50){
-      //   e.value = e.value + 50
-      // }
       branchLength1 = map(e.value, 0, 1, 100, 250);
       branchLength2 = map(e.value, 0, 1, 70, 150);
 
