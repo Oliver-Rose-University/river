@@ -41,7 +41,7 @@ function preload() {
 function setup() {
 
 
-  //canvas position - Olie
+  //canvas position - Oli
   let canvas = createCanvas(innerWidth, 0.75 * innerHeight);
   canvas.id("canvas"); let newCanvasX = (windowWidth) - width;
   let newCanvasY = (windowHeight) / 8;
@@ -87,6 +87,7 @@ function selectNewRiver() {
   // move to the next river after a given number of milliseconds
 }
 
+// Draws a background grid, colouring it with different colours for different values of N
 function drawBackground() {
   noStroke();
   //background(220);
@@ -109,6 +110,7 @@ function drawBackground() {
       rect(x, y, cellSize);
     }
   }
+  // makes it not pixelated
   filter(BLUR, 10);
 }
 
