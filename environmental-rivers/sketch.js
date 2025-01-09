@@ -155,7 +155,7 @@ function drawRiver() {
     vertex(x, y)
 
     for (let j = 0; j < numberOfPoints; j++) {
-      if (i==points[j]) {
+      if (i == points[j]) {
         let beginning = random(0, 1) < 0.5;
         let ending = random(0, 1) < 0.5;
 
@@ -167,17 +167,17 @@ function drawRiver() {
           let x2 = random(x, x + branchLength1)
           let y2 = random(y - branchLength1, y + branchLength1)
           // line(x, y, x2, y2);
-          bezier(x,y,x2-12,y-12,x+12,y2+12,x2,y2)            
+          bezier(x, y, x2 - 12, y - 12, x + 12, y2 + 12, x2, y2)
           // third branches
           if (ending) {
             // line(x2,y2,(x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, (x2 + branchLength2)-10, y2-10, x+10, (y2 + 50)+10, (x2 + branchLength2), (y2 + 50))
+            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 + 50) + 10, (x2 + branchLength2), (y2 + 50))
           } else {
             // line(x2, y2, (x2 + branchLength2), (y2 + 0))
-            bezier(x2, y2, (x2 + branchLength2)-10, y2-10, x+10, y2+10, (x2 + branchLength2), y2)
+            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, y2 + 10, (x2 + branchLength2), y2)
 
             // line(x2, y2, (x2 + branchLength2), (y2 - 50))
-            bezier(x2, y2, (x2 + branchLength2)-10, y2-10, x+10, (y2 - 50)+10, (x2 + branchLength2), (y2 - 50))
+            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 - 50) + 10, (x2 + branchLength2), (y2 - 50))
 
           }
         } else {
@@ -185,19 +185,19 @@ function drawRiver() {
           let x2 = random(x, x + branchLength1)
           let y2 = random(y - branchLength1, y + branchLength1)
           // line(x, y, x2, y2)
-          bezier(x,y,x-12,y-12,x+12,y2+12,x2,y2)     
+          bezier(x, y, x - 12, y - 12, x + 12, y2 + 12, x2, y2)
 
           // third branches
           if (ending) {
             // line(x2, y2, (x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, (x2 + branchLength2)-10, y2-10, x+10, (y2 + 50)+10, (x2 + branchLength2), (y2 + 50))
+            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 + 50) + 10, (x2 + branchLength2), (y2 + 50))
 
           } else {
             // line(x2, y2, (x2 + branchLength2), (y2 + 50))
-            bezier(x2, y2, (x2 + branchLength2)-10, y2-10, x+10, y2+10, (x2 + branchLength2), y2)
+            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, y2 + 10, (x2 + branchLength2), y2)
 
             // line(x2, y2, (x2 + branchLength2), (y2 - 50))
-            bezier(x2, y2, (x2 + branchLength2)-10, y2-10, x+10, (y2 - 50)+10, (x2 + branchLength2), (y2 - 50))
+            bezier(x2, y2, (x2 + branchLength2) - 10, y2 - 10, x + 10, (y2 - 50) + 10, (x2 + branchLength2), (y2 - 50))
 
           }
 
@@ -231,7 +231,7 @@ function drawOverlay() {
   // draw river name
   let riverDescription = river.description
   let riverText = text(riverDescription, 50, 50);
-  if(showMessage == true){
+  if (showMessage == true) {
     text(river.message, 50, 100, 1000);
   }
   textSize(18);
@@ -271,11 +271,11 @@ function allCC(e) {
     }
     case 36: { /* first slider */
 
-       // changes colour of river (?)
-        r = map(e.value, 0, 1, 255, 150);
-        //g = e.value *100;
-        b = map(e.value, 0, 1, 150, 255)
-      
+      // changes colour of river (?)
+      r = map(e.value, 0, 1, 255, 150);
+      //g = e.value *100;
+      b = map(e.value, 0, 1, 150, 255)
+
 
       break;
     }
