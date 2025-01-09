@@ -4,9 +4,9 @@ This template visualises UK flood data by cycling through 1 river at a time
 
 // colours variables used for MIDI control sliders
 let alpha = 255; // skintone transparency
-let r;  // individual rgb variables
-let g;
-let b;
+let r = 64; // individual rgb variables
+let g = 0;
+let b = 0;
 
 
 let myData;
