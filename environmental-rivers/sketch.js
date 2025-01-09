@@ -4,9 +4,9 @@ This template visualises UK flood data by cycling through 1 river at a time
 
 // colours variables used for MIDI control sliders
 let alpha = 255; // skintone transparency
-let r;  // individual rgb variables
-let g;
-let b;
+let r = 64; // individual rgb variables
+let g = 0;
+let b = 0;
 
 
 let myData;
@@ -20,7 +20,7 @@ let branchLength2 = 150;
 let floodWarning;
 let isTidal; // boolean
 let floodDescription; // flood description - optional
-let showMessage = false
+let showMessage = false;
 
 let numberOfPoints = 5;
 
@@ -28,7 +28,7 @@ const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
 const cellSize = 3;
-
+let riverInterval;
 
 function preload() {
   // API definition - https://environment.data.gov.uk/flood-monitoring/doc/reference
@@ -41,18 +41,19 @@ function preload() {
 function setup() {
 
 
-  //canvas position - Olie
+  //canvas position - Oli
   let canvas = createCanvas(innerWidth, 0.75 * innerHeight);
   canvas.id("canvas"); let newCanvasX = (windowWidth) - width;
   let newCanvasY = (windowHeight) / 8;
   canvas.position(newCanvasX, newCanvasY);
 
-  // noLoop();
+  //noLoop();
   selectNewRiver();
   setupController();
-  setInterval(selectNewRiver, 5000);
+  riverInterval = setInterval(selectNewRiver, 5000);
 
   frameRate(15)
+  tempFrames = frameRate(15)
 
   noiseSeed(1);
 
@@ -86,6 +87,7 @@ function selectNewRiver() {
   // move to the next river after a given number of milliseconds
 }
 
+// Draws a background grid, colouring it with different colours for different values of N
 function drawBackground() {
   noStroke();
   //background(220);
@@ -108,6 +110,7 @@ function drawBackground() {
       rect(x, y, cellSize);
     }
   }
+  // makes it not pixelated
   filter(BLUR, 10);
 }
 
@@ -286,7 +289,8 @@ function drawOverlay() {
   textAlign(CENTER, CENTER);
   text(HEADERTEXT, width / 2, height - BOTTOMMARGIN / 2);
   textAlign(LEFT, TOP);
-
+  
+  redraw();
 }
 
 
@@ -309,6 +313,7 @@ function allCC(e) {
       break;
     }
     case 34: {
+      frameRate(e.value * 10 + 1);
 
       break;
     }
@@ -352,8 +357,10 @@ function allNoteOn(e) {
   switch (e.data[1]) {
     case 40: {
       if (e.value) { // stops the loop
-        noLoop() // small error when held for too long, different text and rivers overlay
+            noLoop()
+            clearInterval(riverInterval);
       } else {
+        riverInterval = setInterval(selectNewRiver, 5000);
         loop()
       }
       break;
