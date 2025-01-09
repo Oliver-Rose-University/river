@@ -27,6 +27,7 @@ let numberOfPoints = 5;
 const BLANKMESSAGE = "No flood information given."
 const HEADERTEXT = "UK Rivers Flood Status";
 const BOTTOMMARGIN = 52;
+const TOPMARGIN = 52;
 const cellSize = 3;
 let riverInterval;
 
@@ -42,10 +43,11 @@ function setup() {
 
 
   //canvas position - Oli
-  let canvas = createCanvas(innerWidth, 0.75 * innerHeight);
-  canvas.id("canvas"); let newCanvasX = (windowWidth) - width;
+  let canvas = createCanvas(innerWidth, innerHeight);
+  canvas.id("canvas"); 
+  let newCanvasX = (windowWidth) - width;
   let newCanvasY = (windowHeight) / 8;
-  canvas.position(newCanvasX, newCanvasY);
+  // canvas.position(newCanvasX, newCanvasY);
 
   //noLoop();
   selectNewRiver();
@@ -281,11 +283,11 @@ function drawOverlay() {
   if (showMessage == true) {
     text(river.message, 50, 100, 1000);
   }
-  textSize(18);
+  // textSize(18);
 
-  textSize(20);
+  textSize(36);
   textAlign(CENTER, CENTER);
-  text(HEADERTEXT, width / 2, height - BOTTOMMARGIN / 2);
+  text(HEADERTEXT, width / 2, TOPMARGIN / 2);
   textAlign(LEFT, TOP);
   
   redraw();
