@@ -249,6 +249,7 @@ function allCC(e) {
       break;
     }
     case 34: {
+      frameRate(e.value * 10 + 1);
 
       break;
     }
